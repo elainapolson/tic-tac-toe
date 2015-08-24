@@ -1,7 +1,5 @@
 require "spec_helper"
 
-require 'pry'
-
 describe Game do 
 
   before(:each) do
