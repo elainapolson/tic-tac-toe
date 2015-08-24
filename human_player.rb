@@ -4,9 +4,9 @@ class HumanPlayer
 
   attr_accessor :name, :symbol
 
-  def initialize(symbol)
-    @symbol = symbol
-  end
+  # def initialize(symbol)
+  #   @symbol = symbol
+  # end
 
   def make_move(game, board, input)
     if !(input >= 1 && input <= 9)

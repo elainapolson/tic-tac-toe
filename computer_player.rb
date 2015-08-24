@@ -2,9 +2,8 @@ class ComputerPlayer
 
   attr_accessor :name, :symbol
 
-  def initialize(symbol)
+  def initialize
     @name = "Computer"
-    @symbol = symbol
   end
 
   def make_computer_move(game, board)

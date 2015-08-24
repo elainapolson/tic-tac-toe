@@ -8,8 +8,8 @@ class Game
 
   def initialize
     @board = Board.new
-    @computer = ComputerPlayer.new("o")
-    @human = HumanPlayer.new("x")
+    @computer = ComputerPlayer.new
+    @human = HumanPlayer.new
     @turn = 0 
     @winner = nil
     @loser = nil
@@ -20,8 +20,22 @@ class Game
     puts "---------------------------------------------------"
     print "Human Player: "
     @human.name = gets.chomp.capitalize
-    puts "Nice to meet you, #{@human.name}! Let's get started! You will be 'x' and the computer will be 'o'. Pick your spot on the board by choosing a number that corresponds to the space you want."
+    puts "Nice to meet you, #{@human.name}! Let's get started! #{@human.name}, would you like to be 'X' or 'O'?"
+    input = gets.chomp.upcase
+    choose_symbols(input)
   end 
+
+  def choose_symbols(input)
+    if input != "X" && input != "O"
+      puts "#{input} is not a symbol choice. Please choose 'X' or 'O'."
+      input = gets.chomp.upcase
+      choose_symbols(input)
+    else
+      @human.symbol = input
+      @human.symbol == "X" ? @computer.symbol = "O" : @computer.symbol = "X"
+      puts "Great! You're #{@human.symbol} and the computer is #{@computer.symbol}. Let's start. Pick your spot on the board by choosing a number that corresponds to the space you want."
+    end
+  end
 
   def play 
     welcome_message
