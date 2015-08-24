@@ -13,7 +13,6 @@ class HumanPlayer
       make_move(board, input)
     else 
       board.positions[input - 1] = "#{self.symbol}" 
-      board.show
     end
   end 
 

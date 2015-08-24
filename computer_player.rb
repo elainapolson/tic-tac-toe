@@ -12,7 +12,6 @@ class ComputerPlayer
     chosen_spot = board.available_spaces.sample
     puts "#{self.name} chooses spot #{chosen_spot}"
     board.positions[chosen_spot - 1] = self.symbol
-    board.show
   end
 
 end

@@ -4,7 +4,7 @@ require_relative "human_player"
 
 class Game
 
-  attr_accessor :winner, :tie, :human, :computer
+  attr_accessor :winner, :loser, :tie, :human, :computer, :game_over
 
   def initialize
     @board = Board.new
@@ -16,45 +16,64 @@ class Game
     @loser = nil
   end 
 
+  def play 
+    welcome_message
+    get_symbol_input
+    kick_off_turns
+    take_turn
+  end
+
   def welcome_message
     puts "Hi there! Let's play a tic-tac-toe game I've created! First, let me get your name."
     print "Human Player: "
     @human.name = gets.chomp.capitalize
-    puts "Nice to meet you, #{@human.name}! Let's get started! #{@human.name}, would you like to be 'X' or 'O'?"
-    input = gets.chomp.upcase
-    choose_symbols(input)
+    puts "Nice to meet you, #{@human.name}!"
   end 
 
-  def choose_symbols(input)
+  def get_symbol_input
+    puts "Let's get started! #{@human.name}, would you like to be 'X' or 'O'?"
+    input = gets.chomp.upcase
+    assign_symbols(input)
+  end
+
+  def assign_symbols(input)
     if input != "X" && input != "O"
       puts "#{input} is not a symbol choice. Please choose 'X' or 'O'."
       input = gets.chomp.upcase
-      choose_symbols(input)
+      assign_symbols(input)
     else
       @human.symbol = input
       @human.symbol == "X" ? @computer.symbol = "O" : @computer.symbol = "X"
-      puts "Great! You're #{@human.symbol} and the computer is #{@computer.symbol}. Let's start. Pick your spot on the board by choosing a number that corresponds to the space you want."
+      puts "Great! You're #{@human.symbol} and the computer is #{@computer.symbol}."
     end
   end
 
-  def play 
-    welcome_message
-    @board.show
-    turn
+  def kick_off_turns
+    puts "#{human.name}, would you like to go first? Enter 'yes' or 'no'."
+    input = gets.chomp.downcase
+    if input == "yes"
+      @turn = 0
+      puts "Great. You'll go first. Pick your spot on the board by choosing a number that corresponds to the space you want."
+    else
+      @turn = 1
+      puts "Ok. Computer will go first"
+    end
   end
 
-  def turn
+  def take_turn
     while !game_over?
       if @turn.even?
+        @board.show
         puts "It's #{@human.name}'s turn! Which empty spot do you choose?"
         input = gets.chomp.to_i
         @human.make_move(@board, input)
-        check_for_end_of_game
+        check_for_end_of_game(@board)
         @turn += 1
       elsif @turn.odd?
+        @board.show
         puts "It's the computer's turn!"
         @computer.make_computer_move(@board)
-        check_for_end_of_game
+        check_for_end_of_game(@board)
         @turn += 1
       end
     end
@@ -94,7 +113,7 @@ class Game
   end
 
   def game_over?
-    @tie || @winner
+    !!@tie || !!@winner
   end
 
   def announce_tie
@@ -109,7 +128,7 @@ class Game
   end
 
   def closing_message
-    puts "Great game! Thanks for playing! Do you want to play again? (yes/no)"
+    puts "Great game! Thanks for playing! Do you want to play again? Enter 'yes' or 'no'."
     answer = gets.chomp.downcase
     if answer == "yes"
       puts "Awesome! Let's do it again!"
