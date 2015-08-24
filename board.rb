@@ -1,9 +1,10 @@
 class Board
 
-  attr_accessor :positions
+  attr_accessor :positions, :winning_scenarios
 
   def initialize
     @positions = [1, 2, 3, 4, 5, 6, 7, 8, 9] 
+    @winning_scenarios = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
   end
 
   def show                 
@@ -18,7 +19,8 @@ class Board
     @positions.select {|p| p.is_a? Integer}
   end
 
-# WINNING_COMBOS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
+
+# WINNING_COMBOS = 
 
 
   # def initialize # board position starts from 1 to 9
