@@ -1,4 +1,4 @@
-require_relative '../tic_tac_toe.rb'
+require_relative '../game.rb'
 
 RSpec.configure do |config|
   config.order = 'default'

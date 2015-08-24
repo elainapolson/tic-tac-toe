@@ -6,7 +6,7 @@ class ComputerPlayer
     @name = "Computer"
   end
 
-  def make_computer_move(game, board)
+  def make_computer_move(board)
     puts "...#{self.name} is choosing a spot..."
     sleep 2
     chosen_spot = board.available_spaces.sample
