@@ -1,5 +1,5 @@
 require "spec_helper"
-
+require 'pry'
 describe Game do 
 
   before(:each) do
@@ -11,11 +11,11 @@ describe Game do
 
   context 'when the game is not over' do 
     before do 
-      @game.check_for_winner(@board)
-      @game.check_for_tie(@board)
+      @game.check_for_end_of_game(@board)
     end
 
     it "knows it isn't over" do
+
       expect(@game.game_over?).to eq false
     end
 
@@ -35,9 +35,8 @@ describe Game do
 
   context "when the game is tied" do
     before do 
-      @board.positions = ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]
-      @game.check_for_winner(@board)
-      @game.check_for_tie(@board)
+      @board.positions = [["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"], ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"], ["#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]]
+      @game.check_for_end_of_game(@board)
     end
 
     it "knows the game is over" do
@@ -59,9 +58,8 @@ describe Game do
 
   context "when the computer wins diagonally" do
     before do 
-      @board.positions = ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]
-      @game.check_for_winner(@board)
-      @game.check_for_tie(@board)
+      @board.positions = [["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"], ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"], ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]]
+      @game.check_for_end_of_game(@board)
     end
 
     it "knows the game is over" do
@@ -83,9 +81,8 @@ describe Game do
 
   context "when the human wins diagonally" do
     before do 
-      @board.positions = ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]
-      @game.check_for_winner(@board)
-      @game.check_for_tie(@board)
+      @board.positions = [["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"], ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"], ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]]
+      @game.check_for_end_of_game(@board)
     end 
 
     it "knows the game is over" do
@@ -107,9 +104,8 @@ describe Game do
 
   context "when the computer wins horizontally" do
     before do
-      @board.positions = ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]
-      @game.check_for_winner(@board)
-      @game.check_for_tie(@board)
+      @board.positions = [["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}"], ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"], ["#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]]
+      @game.check_for_end_of_game(@board)
     end
     
     it "knows the game is over" do
@@ -131,9 +127,8 @@ describe Game do
 
   context "when the human wins horizontally" do
     before do
-      @board.positions = ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]
-      @game.check_for_winner(@board)
-      @game.check_for_tie(@board)
+      @board.positions = [["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}"], ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"], ["#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]]
+      @game.check_for_end_of_game(@board)
     end
 
     it "knows the game is over" do
@@ -155,9 +150,8 @@ describe Game do
 
   context "when the computer wins vertically" do
     before do 
-      @board.positions = ["#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]
-      @game.check_for_winner(@board)
-      @game.check_for_tie(@board)
+      @board.positions = [["#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}"], ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"], ["#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]]
+      @game.check_for_end_of_game(@board)
     end
 
     it "knows the game is over" do
@@ -179,9 +173,8 @@ describe Game do
 
   context "when human wins vertically" do
     before do 
-      @board.positions = ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]
-      @game.check_for_winner(@board)
-      @game.check_for_tie(@board)
+      @board.positions = [["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"], ["#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"], ["#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]]
+      @game.check_for_end_of_game(@board)
     end
 
     it "knows the game is over" do

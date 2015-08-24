@@ -3,20 +3,27 @@ class Board
   attr_accessor :positions, :winning_scenarios
 
   def initialize
-    @positions = [1, 2, 3, 4, 5, 6, 7, 8, 9] 
-    @winning_scenarios = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    @positions = [[1, 2, 3], 
+                  [4, 5, 6], 
+                  [7, 8, 9]]
   end
 
   def show                 
-    puts " #{@positions[0]} | #{@positions[1]} | #{@positions[2]}"
+    puts " #{@positions[0][0]} | #{@positions[0][1]} | #{@positions[0][2]}"
     puts "-----------"
-    puts " #{@positions[3]} | #{@positions[4]} | #{@positions[5]}"
+    puts " #{@positions[1][0]} | #{@positions[1][1]} | #{@positions[1][2]}"
     puts "-----------"
-    puts " #{@positions[6]} | #{@positions[7]} | #{@positions[8]}"
+    puts " #{@positions[2][0]} | #{@positions[2][1]} | #{@positions[2][2]}"
   end
 
   def available_spaces
-    @positions.select {|p| p.is_a? Integer}
+    @positions.collect do |array|
+      array.select {|value| value.is_a? Integer} 
+    end.flatten
+  end
+
+  def inverted_board
+    @positions.transpose.map(&:reverse)
   end
 
 end

@@ -77,48 +77,47 @@ class Game
         @turn += 1
       end
     end
-  end
-
-  def check_for_end_of_game(board)
-    check_for_winner(board)
-    check_for_tie(board)
-    if @winner
-      announce_winner(@winner)
-    elsif @tie
-      announce_tie
-    end
-  end 
-
-  def check_for_winner(board)
-    if winning_combination(board).flatten.first == @human.symbol
-      @winner = @human
-      @loser = @computer
-    elsif winning_combination(board).flatten.first == @computer.symbol
-      @winner = @computer 
-      @loser = @human
-    end
-  end
-
-  def potential_wins(board)
-    board.winning_scenarios.collect do |scenario| 
-      scenario.collect {|s| board.positions[s]}
-    end
-  end  
-
-  def winning_combination(board)
-    potential_wins(board).select do |array|
-      array.all? {|x| x == array[0]}
-    end
-  end
-
-  def check_for_tie(board)
-    if board.available_spaces.empty? && !@winner
-      @tie = true
-    end
+    announce_results
   end
 
   def game_over?
     !!@tie || !!@winner
+  end
+
+  def check_for_end_of_game(board)
+    if human_wins(board) 
+      @winner = @human
+      @loser = @computer 
+    elsif computer_wins(board)
+      @winner = @computer
+      @loser = @human 
+    elsif tied_game(board)
+      @tie = true
+    end
+  end
+
+  def announce_results
+    @winner ? announce_winner(@winner) : announce_tie
+  end
+
+  def human_wins(board)
+    board.positions.include?([@human.symbol, @human.symbol, @human.symbol]) || board.inverted_board.include?([@human.symbol, @human.symbol, @human.symbol]) || human_wins_diagonally(board)
+  end
+
+  def computer_wins(board)
+    board.positions.include?([@computer.symbol, @computer.symbol, @computer.symbol]) || board.inverted_board.include?([@computer.symbol, @computer.symbol, @computer.symbol]) || computer_wins_diagonally(board)
+  end
+
+  def human_wins_diagonally(board)
+    (board.positions[0][0] == @human.symbol && board.positions[1][1] == @human.symbol && board.positions[2][2] == @human.symbol) || (board.positions[0][2] == @human.symbol && board.positions[1][1] == @human.symbol && board.positions[2][0] == @human.symbol)
+  end
+
+  def computer_wins_diagonally(board)
+    (board.positions[0][0] == @computer.symbol && board.positions[1][1] == @computer.symbol && board.positions[2][2] == @computer.symbol) || (board.positions[0][2] == @computer.symbol && board.positions[1][1] == @computer.symbol && board.positions[2][0] == @computer.symbol)
+  end
+
+  def tied_game(board)
+    board.available_spaces.empty? && !@winner
   end
 
   def announce_tie

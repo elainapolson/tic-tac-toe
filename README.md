@@ -7,7 +7,6 @@ Core Requirements:
 - When the game is done, it should announce who the winner is and ask if you want to play again.
 - The application should be built using object oriented design.
 
-
 Suggestions:
 - Make the grid size variable
 - Keep your code DRY

@@ -12,8 +12,22 @@ class HumanPlayer
       input = gets.chomp.to_i
       make_move(board, input)
     else 
-      board.positions[input - 1] = "#{self.symbol}" 
+      board.positions[squares[input][:x_coordinate]][squares[input][:y_coordinate]] = "#{self.symbol}"
     end
   end 
+
+  def squares
+    squares = {
+        1 => {x_coordinate: 0, y_coordinate: 0},
+        2 => {x_coordinate: 0, y_coordinate: 1},
+        3 => {x_coordinate: 0, y_coordinate: 2},
+        4 => {x_coordinate: 1, y_coordinate: 0},
+        5 => {x_coordinate: 1, y_coordinate: 1},
+        6 => {x_coordinate: 1, y_coordinate: 2},
+        7 => {x_coordinate: 2, y_coordinate: 0},
+        8 => {x_coordinate: 2, y_coordinate: 1},
+        9 => {x_coordinate: 2, y_coordinate: 2}
+    }
+  end
 
 end
