@@ -9,99 +9,196 @@ describe Game do
     @board = Board.new
   end
 
-  it "knows when game is not over and there is no tie, winner, or loser" do
-    @game.check_for_winner(@board)
-    @game.check_for_tie(@board)
+  context 'when the game is not over' do 
+    before do 
+      @game.check_for_winner(@board)
+      @game.check_for_tie(@board)
+    end
 
-    expect(@game.game_over?).to eq false
-    expect(@game.winner).to eq nil
-    expect(@game.loser).to eq nil
-    expect(@game.tie).to eq false
+    it "knows it isn't over" do
+      expect(@game.game_over?).to eq false
+    end
+
+    it 'has no winner' do 
+        expect(@game.winner).to eq nil
+    end
+    
+    it 'has no loser' do
+      expect(@game.loser).to eq nil
+    end
+    
+    it 'is not tied' do 
+      expect(@game.tie).to eq false
+    end
+  end 
+
+
+  context "when the game is tied" do
+    before do 
+      @board.positions = ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]
+      @game.check_for_winner(@board)
+      @game.check_for_tie(@board)
+    end
+
+    it "knows the game is over" do
+      expect(@game.game_over?).to eq true
+    end
+
+    it 'has no winner' do 
+        expect(@game.winner).to eq nil
+    end
+    
+    it 'has no loser' do
+      expect(@game.loser).to eq nil
+    end
+    
+    it 'know the game is tied' do 
+      expect(@game.tie).to eq true
+    end
+  end 
+
+  context "when the computer wins diagonally" do
+    before do 
+      @board.positions = ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]
+      @game.check_for_winner(@board)
+      @game.check_for_tie(@board)
+    end
+
+    it "knows the game is over" do
+      expect(@game.game_over?).to eq true
+    end
+
+    it "knows computer is winner" do 
+        expect(@game.winner).to eq @game.computer
+    end
+    
+    it "knows human is loser" do
+      expect(@game.loser).to eq @game.human
+    end
+    
+    it "know the game is not tied" do 
+      expect(@game.tie).to eq false
+    end
   end
 
-  it "works for a tie" do
-    @board.positions = ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]
+  context "when the human wins diagonally" do
+    before do 
+      @board.positions = ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]
+      @game.check_for_winner(@board)
+      @game.check_for_tie(@board)
+    end 
 
-    @game.check_for_winner(@board)
-    @game.check_for_tie(@board)
+    it "knows the game is over" do
+      expect(@game.game_over?).to eq true
+    end
 
-    expect(@game.game_over?).to eq true
-    expect(@game.winner).to eq nil
-    expect(@game.loser).to eq nil
-    expect(@game.tie).to eq true
+    it "knows human is winner" do 
+        expect(@game.winner).to eq @game.human
+    end
+    
+    it "knows computer is loser" do
+      expect(@game.loser).to eq @game.computer
+    end
+    
+    it "know the game is not tied" do 
+      expect(@game.tie).to eq false
+    end
   end
 
-  it "works when computer wins diagonally" do
-    @board.positions = ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]
+  context "when the computer wins horizontally" do
+    before do
+      @board.positions = ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]
+      @game.check_for_winner(@board)
+      @game.check_for_tie(@board)
+    end
+    
+    it "knows the game is over" do
+      expect(@game.game_over?).to eq true
+    end
 
-    @game.check_for_winner(@board)
-    @game.check_for_tie(@board)
-
-    expect(@game.game_over?).to eq true
-    expect(@game.winner).to eq @game.computer
-    expect(@game.loser).to eq @game.human
-    expect(@game.tie).to eq false
+    it "knows computer is winner" do 
+        expect(@game.winner).to eq @game.computer
+    end
+    
+    it "knows human is loser" do
+      expect(@game.loser).to eq @game.human
+    end
+    
+    it "know the game is not tied" do 
+      expect(@game.tie).to eq false
+    end
   end
 
-  it "works when human wins diagonally" do
-    @board.positions = ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]
+  context "when the human wins horizontally" do
+    before do
+      @board.positions = ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]
+      @game.check_for_winner(@board)
+      @game.check_for_tie(@board)
+    end
 
-    @game.check_for_winner(@board)
-    @game.check_for_tie(@board)
+    it "knows the game is over" do
+      expect(@game.game_over?).to eq true
+    end
 
-    expect(@game.game_over?).to eq true
-    expect(@game.winner).to eq @game.human
-    expect(@game.loser).to eq @game.computer
-    expect(@game.tie).to eq false
+    it "knows human is winner" do 
+        expect(@game.winner).to eq @game.human
+    end
+    
+    it "knows computer is loser" do
+      expect(@game.loser).to eq @game.computer
+    end
+    
+    it "know the game is not tied" do 
+      expect(@game.tie).to eq false
+    end
   end
 
-  it "works when computer wins horizontally" do
-    @board.positions = ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]
+  context "when the computer wins vertically" do
+    before do 
+      @board.positions = ["#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]
+      @game.check_for_winner(@board)
+      @game.check_for_tie(@board)
+    end
 
-    @game.check_for_winner(@board)
-    @game.check_for_tie(@board)
+    it "knows the game is over" do
+      expect(@game.game_over?).to eq true
+    end
 
-    expect(@game.game_over?).to eq true
-    expect(@game.winner).to eq @game.computer
-    expect(@game.loser).to eq @game.human
-    expect(@game.tie).to eq false
+    it "knows computer is winner" do 
+        expect(@game.winner).to eq @game.computer
+    end
+    
+    it "knows human is loser" do
+      expect(@game.loser).to eq @game.human
+    end
+    
+    it "know the game is not tied" do 
+      expect(@game.tie).to eq false
+    end
   end
 
-  it "works when human wins horizontally" do
-    @board.positions = ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]
+  context "when human wins vertically" do
+    before do 
+      @board.positions = ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]
+      @game.check_for_winner(@board)
+      @game.check_for_tie(@board)
+    end
 
-    @game.check_for_winner(@board)
-    @game.check_for_tie(@board)
+    it "knows the game is over" do
+      expect(@game.game_over?).to eq true
+    end
 
-    expect(@game.game_over?).to eq true
-    expect(@game.winner).to eq @game.human
-    expect(@game.loser).to eq @game.computer
-    expect(@game.tie).to eq false
-  end
-
-  it "works when computer wins vertically" do
-    @board.positions = ["#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]
-
-    @game.check_for_winner(@board)
-    @game.check_for_tie(@board)
-
-    expect(@game.game_over?).to eq true
-    expect(@game.winner).to eq @game.computer
-    expect(@game.loser).to eq @game.human
-    expect(@game.tie).to eq false
-  end
-
-  it "works when human wins vertically" do
-    @board.positions = ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]
-
-    @game.check_for_winner(@board)
-    @game.check_for_tie(@board)
-
-    expect(@game.game_over?).to eq true
-    expect(@game.winner).to eq @game.human
-    expect(@game.loser).to eq @game.computer
-    expect(@game.tie).to eq false
+    it "knows human is winner" do 
+        expect(@game.winner).to eq @game.human
+    end
+    
+    it "knows computer is loser" do
+      expect(@game.loser).to eq @game.computer
+    end
+    
+    it "know the game is not tied" do 
+      expect(@game.tie).to eq false
+    end
   end
 
 end
-

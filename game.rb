@@ -4,7 +4,7 @@ require_relative "human_player"
 
 class Game
 
-  attr_accessor :winner, :loser, :tie, :human, :computer, :game_over
+  attr_accessor :winner, :loser, :tie, :human, :computer
 
   def initialize
     @board = Board.new
@@ -69,7 +69,7 @@ class Game
         @human.make_move(@board, input)
         check_for_end_of_game(@board)
         @turn += 1
-      elsif @turn.odd?
+      else
         @board.show
         puts "It's the computer's turn!"
         @computer.make_computer_move(@board)
@@ -90,19 +90,24 @@ class Game
   end 
 
   def check_for_winner(board)
-    potential_wins = board.winning_scenarios.collect do |scenario| 
-      scenario.collect {|s| board.positions[s]}
-    end  
-    winning_combo = potential_wins.select do |array|
-      array.all? {|x| x == array[0]}
-    end
-
-    if winning_combo.flatten.first == @human.symbol
+    if winning_combination(board).flatten.first == @human.symbol
       @winner = @human
       @loser = @computer
-    elsif winning_combo.flatten.first == @computer.symbol
+    elsif winning_combination(board).flatten.first == @computer.symbol
       @winner = @computer 
       @loser = @human
+    end
+  end
+
+  def potential_wins(board)
+    board.winning_scenarios.collect do |scenario| 
+      scenario.collect {|s| board.positions[s]}
+    end
+  end  
+
+  def winning_combination(board)
+    potential_wins(board).select do |array|
+      array.all? {|x| x == array[0]}
     end
   end
 
