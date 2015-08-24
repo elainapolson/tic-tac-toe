@@ -30,7 +30,7 @@ class Game
   end
 
   def turn
-    while !game_over?
+    while !winner? && !tied_game?
       if @turn.even?
         puts "It's #{@human.name}'s turn! Which empty spot do you choose?"
         input = gets.chomp.to_i
@@ -56,31 +56,24 @@ class Game
   end 
 
   def winner?
-
     # go through each winning scenario, and check the board values    
     potential_wins = @board.winning_scenarios.collect do |scenario| 
       scenario.collect {|s| @board.positions[s]}
-    end  
-
+    end
     # check the winning positions to see if any are filled with just x's or just o's
     winning_combo = potential_wins.select do |array|
       array.all? {|x| x == array[0]}
     end
-
     true if winning_combo.length > 0
-
   end
 
   def identify_winner
     potential_wins = @board.winning_scenarios.collect do |scenario| 
       scenario.collect {|s| @board.positions[s]}
     end  
-
-    # check the winning positions to see if any are filled with just x's or just o's
     winning_combo = potential_wins.select do |array|
       array.all? {|x| x == array[0]}
     end
-
     if winning_combo.flatten.first == @human.symbol
       @winner = @human
       @loser = @computer
@@ -91,11 +84,7 @@ class Game
   end
 
   def tied_game?
-    @board.available_spaces.empty?
-  end
-
-  def game_over?
-    tied_game? || @winner
+    @board.available_spaces.empty? && !winner?
   end
 
   def announce_tie
