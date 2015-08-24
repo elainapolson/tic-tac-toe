@@ -37,7 +37,7 @@ class Board
   end
 
   def inverted_board
-    @positions.transpose.map(&:reverse)
+    @positions.transpose.map{|row| row.reverse}
   end
 
 end
