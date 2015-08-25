@@ -1,6 +1,6 @@
 class Board
 
-  attr_accessor :cells, :positions, :winning_scenarios
+  attr_accessor :cells, :positions
 
   def initialize
     @cells = {
