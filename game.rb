@@ -77,6 +77,7 @@ class Game
         @turn += 1
       end
     end
+    @board.show
     announce_results
   end
 
@@ -117,7 +118,7 @@ class Game
   end
 
   def tied_game(board)
-    board.available_spaces.empty? && !@winner
+    board.available_cells.empty? && !@winner
   end
 
   def announce_tie

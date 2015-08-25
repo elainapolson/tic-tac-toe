@@ -1,4 +1,3 @@
-require 'pry'
 class HumanPlayer
 
   attr_accessor :name, :symbol
@@ -8,12 +7,12 @@ class HumanPlayer
       puts "Ummmm, that doesn't look like a number between 1 - 9. Let's try that again." 
       input = gets.chomp.to_i
       make_move(board, input)
-    elsif !(board.available_spaces.include?(input))
+    elsif !(board.available_cells.include?(input))
       puts "Do you need glasses?? That spot is taken! Pick another spot." 
       input = gets.chomp.to_i
       make_move(board, input)
     else 
-      board.positions[board.cells[input][:x_coordinate]][board.cells[input][:y_coordinate]] = "#{self.symbol}"
+      board.cells[input][:value] = self.symbol
     end
   end 
 

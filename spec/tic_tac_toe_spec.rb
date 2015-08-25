@@ -1,5 +1,5 @@
 require "spec_helper"
-require 'pry'
+
 describe Game do 
 
   before(:each) do
@@ -32,14 +32,23 @@ describe Game do
     end
   end 
 
-
   context "when the game is tied" do
     before do 
-      @board.positions = [["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"], ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"], ["#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]]
+      @board.cells[1][:value] = @game.human.symbol
+      @board.cells[2][:value] = @game.human.symbol
+      @board.cells[3][:value] = @game.computer.symbol
+      @board.cells[4][:value] = @game.computer.symbol
+      @board.cells[5][:value] = @game.computer.symbol
+      @board.cells[6][:value] = @game.human.symbol
+      @board.cells[7][:value] = @game.human.symbol
+      @board.cells[8][:value] = @game.computer.symbol
+      @board.cells[9][:value] = @game.human.symbol
+
       @game.check_for_end_of_game(@board)
     end
 
     it "knows the game is over" do
+
       expect(@game.game_over?).to eq true
     end
 
@@ -58,7 +67,16 @@ describe Game do
 
   context "when the computer wins diagonally" do
     before do 
-      @board.positions = [["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"], ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"], ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]]
+      @board.cells[1][:value] = @game.human.symbol
+      @board.cells[2][:value] = @game.human.symbol
+      @board.cells[3][:value] = @game.computer.symbol
+      @board.cells[4][:value] = @game.computer.symbol
+      @board.cells[5][:value] = @game.computer.symbol
+      @board.cells[6][:value] = @game.human.symbol
+      @board.cells[7][:value] = @game.computer.symbol
+      @board.cells[8][:value] = @game.computer.symbol
+      @board.cells[9][:value] = @game.human.symbol
+
       @game.check_for_end_of_game(@board)
     end
 
@@ -81,7 +99,16 @@ describe Game do
 
   context "when the human wins diagonally" do
     before do 
-      @board.positions = [["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"], ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"], ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]]
+      @board.cells[1][:value] = @game.computer.symbol
+      @board.cells[2][:value] = @game.computer.symbol
+      @board.cells[3][:value] = @game.human.symbol
+      @board.cells[4][:value] = @game.human.symbol
+      @board.cells[5][:value] = @game.human.symbol
+      @board.cells[6][:value] = @game.computer.symbol
+      @board.cells[7][:value] = @game.human.symbol
+      @board.cells[8][:value] = @game.human.symbol
+      @board.cells[9][:value] = @game.computer.symbol
+
       @game.check_for_end_of_game(@board)
     end 
 
@@ -104,7 +131,16 @@ describe Game do
 
   context "when the computer wins horizontally" do
     before do
-      @board.positions = [["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.computer.symbol}"], ["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"], ["#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]]
+      @board.cells[1][:value] = @game.computer.symbol
+      @board.cells[2][:value] = @game.computer.symbol
+      @board.cells[3][:value] = @game.computer.symbol
+      @board.cells[4][:value] = @game.human.symbol
+      @board.cells[5][:value] = @game.human.symbol
+      @board.cells[6][:value] = @game.computer.symbol
+      @board.cells[7][:value] = @game.human.symbol
+      @board.cells[8][:value] = @game.computer.symbol
+      @board.cells[9][:value] = @game.human.symbol
+
       @game.check_for_end_of_game(@board)
     end
     
@@ -127,7 +163,16 @@ describe Game do
 
   context "when the human wins horizontally" do
     before do
-      @board.positions = [["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}"], ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"], ["#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]]
+      @board.cells[1][:value] = @game.human.symbol
+      @board.cells[2][:value] = @game.human.symbol
+      @board.cells[3][:value] = @game.human.symbol
+      @board.cells[4][:value] = @game.computer.symbol
+      @board.cells[5][:value] = @game.computer.symbol
+      @board.cells[6][:value] = @game.human.symbol
+      @board.cells[7][:value] = @game.computer.symbol
+      @board.cells[8][:value] = @game.human.symbol
+      @board.cells[9][:value] = @game.computer.symbol
+
       @game.check_for_end_of_game(@board)
     end
 
@@ -150,7 +195,16 @@ describe Game do
 
   context "when the computer wins vertically" do
     before do 
-      @board.positions = [["#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.human.symbol}"], ["#{@game.computer.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"], ["#{@game.computer.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"]]
+      @board.cells[1][:value] = @game.computer.symbol
+      @board.cells[2][:value] = @game.human.symbol
+      @board.cells[3][:value] = @game.human.symbol
+      @board.cells[4][:value] = @game.computer.symbol
+      @board.cells[5][:value] = @game.computer.symbol
+      @board.cells[6][:value] = @game.human.symbol
+      @board.cells[7][:value] = @game.computer.symbol
+      @board.cells[8][:value] = @game.human.symbol
+      @board.cells[9][:value] = @game.computer.symbol
+
       @game.check_for_end_of_game(@board)
     end
 
@@ -173,7 +227,16 @@ describe Game do
 
   context "when human wins vertically" do
     before do 
-      @board.positions = [["#{@game.human.symbol}", "#{@game.human.symbol}", "#{@game.computer.symbol}"], ["#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"], ["#{@game.human.symbol}", "#{@game.computer.symbol}", "#{@game.human.symbol}"]]
+      @board.cells[1][:value] = @game.human.symbol
+      @board.cells[2][:value] = @game.human.symbol
+      @board.cells[3][:value] = @game.computer.symbol
+      @board.cells[4][:value] = @game.human.symbol
+      @board.cells[5][:value] = @game.computer.symbol
+      @board.cells[6][:value] = @game.human.symbol
+      @board.cells[7][:value] = @game.human.symbol
+      @board.cells[8][:value] = @game.computer.symbol
+      @board.cells[9][:value] = @game.human.symbol
+
       @game.check_for_end_of_game(@board)
     end
 

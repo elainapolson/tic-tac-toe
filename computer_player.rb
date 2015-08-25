@@ -9,9 +9,9 @@ class ComputerPlayer
   def make_computer_move(board)
     puts "...#{self.name} is choosing a spot..."
     sleep 2
-    input = board.available_spaces.sample
+    input = board.available_cells.collect {|k, v| v[:value]}.sample
     puts "#{self.name} chooses spot #{input}"
-    board.positions[board.cells[input][:x_coordinate]][board.cells[input][:y_coordinate]] = "#{self.symbol}"
+    board.cells[input][:value] = self.symbol
   end
 
 end
