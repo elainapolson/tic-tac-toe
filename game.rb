@@ -21,6 +21,7 @@ class Game
     get_symbol_input
     kick_off_turns
     take_turn
+    announce_results
   end
 
   def welcome_message
@@ -77,8 +78,6 @@ class Game
         @turn += 1
       end
     end
-    @board.show
-    announce_results
   end
 
   def game_over?
@@ -122,11 +121,13 @@ class Game
   end
 
   def announce_tie
+    @board.show
     puts "Looks like a tie!!! I guess you're both pretty bad at this, huh?"
     closing_message
   end
 
   def announce_winner(winner)
+    @board.show
     puts "*~*~*~*~*~*~*~*~#{@winner.name} wins!!!*~*~*~*~*~*~*~*~".upcase
     puts "Wow, #{@loser.name}. Have you ever even played Tic Tac Toe?"
     closing_message
